@@ -76,12 +76,18 @@ class Node
 
 		ll search_index(ll node, ll start, ll end)
 		{
+			if(end<start)
+				return -1;
+
 			if(end-start<=1)
 			{
 				if(edges[end].node==node)
 					return end;
 
-				return start;
+				if(edges[start].node==node)
+					return start;
+
+				return -1;
 			}
 
 			ll mid = (start+end)/2;
@@ -114,6 +120,17 @@ class Graph
 		Graph()
 		{
 
+		}
+
+		void init(ll n)
+		{
+			node_size = n;
+			for(ll i=0; i<=n; i++)
+			{
+				nodes[i].index = i;
+				nodes[i].parent = -1;
+				nodes[i].edges.clear();
+			}
 		}
 
 		void input_graph(bool is_tree, bool is_directed, bool is_cost)
@@ -150,6 +167,16 @@ class Graph
 		{
 			for(ll i=0; i<node_size; i++)
 				nodes[i].sort_edges();
+		}
+
+		void clear_graph()
+		{
+			for(ll i=0; i<max_node_size; i++)
+			{
+				nodes[i].parent = -1;
+				nodes[i].edges.clear();
+			}
+
 		}
 };
 
