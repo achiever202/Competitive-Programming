@@ -63,3 +63,27 @@ ll mod_divison(ll dividend, ll divisor)
 {
 	return (dividend*mod_inv(divisor))%mod;
 }
+
+
+/* This function returns the gcd of two long long numbers. */
+ll gcd(ll a, ll b)
+{
+	ll temp;
+
+	if(a<b)
+	{
+		temp = a;
+		a = b;
+		b = temp;
+	}
+
+	while(a%b)
+	{
+		temp = a;
+		a = b;
+		b = temp%b;
+	}
+
+	return b;
+}
+
