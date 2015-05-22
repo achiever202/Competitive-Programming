@@ -25,7 +25,7 @@
 #define pb push_back
 #define pob pop_back
  
-#define max_size 100005
+#define max_size 1000005
 #define max_capacity INT_MAX
 #define max_string_size 1000
 #define max_node_size 340
@@ -108,5 +108,6 @@ class KMP
 
 int main()
 {
+	
 	return 0;
 }
