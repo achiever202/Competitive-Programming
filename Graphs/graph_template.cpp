@@ -23,7 +23,7 @@
 #define pb push_back
 #define pob pop_back
 
-#define max_size 100005
+#define max_size 50006
 #define max_capacity 100007
 #define max_node_size 100005
 #define INF 100000
@@ -170,6 +170,19 @@ class Graph
 			}
 		}
 
+		void recursive_dfs(ll node, ll parent)
+		{
+			visited[node] = 1;
+
+			for(ll i=0; i<nodes[node].edges.size(); i++)
+			{
+				if(!visited[nodes[node].edges[i].node])
+				{
+					recursive_dfs(nodes[node].edges[i].node, node);
+				}
+			}
+		}
+
 		void sort_edges()
 		{
 			for(ll i=0; i<node_size; i++)
@@ -187,20 +200,8 @@ class Graph
 		}
 }graph;
 
+
 int main()
 {	
-	graph.init(5);
-	graph.add_edge(1, 2, -1);
-	graph.add_edge(1, 3, 4);
-	graph.add_edge(2, 3, 3);
-	graph.add_edge(2, 4, 2);
-	graph.add_edge(2, 5, 2);
-	graph.add_edge(4, 3, 5);
-	graph.add_edge(4, 2, 2);
-	graph.add_edge(5, 4, -3);
-
-	bellman_ford.init(1);
-	for(ll i=1; i<=graph.node_size; i++)
-		cout<<bellman_ford.get_cost(i)<<endl;
 	return 0;
 }
