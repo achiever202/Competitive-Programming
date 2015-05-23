@@ -3,6 +3,7 @@
 #include <vector>
 #include <math.h>
 #include <set>
+#include <stack>
 #include <queue>
 #include <algorithm>
 
@@ -23,8 +24,9 @@
 #define pob pop_back
 
 #define max_size 100005
-#define max_capacity INT_MAX
+#define max_capacity 100007
 #define max_node_size 100005
+#define INF 100000
 
 using namespace std;
 
@@ -116,6 +118,7 @@ class Graph
 		ll edge_size;
 		Node nodes[max_node_size];
 		bool visited[max_node_size];
+		ll cost[max_node_size];
 
 		Graph()
 		{
@@ -133,33 +136,37 @@ class Graph
 			}
 		}
 
-		void input_graph(bool is_tree, bool is_directed, bool is_cost)
+		void add_edge(ll i, ll j, ll k)
 		{
-			cin>>node_size;
-			for(ll i=0; i<node_size; i++)
+			nodes[i].add_edge(j, k);
+		}
+
+		void dfs(ll source)
+		{
+			for(ll i=0; i<=node_size; i++)
+				visited[i] = 0;
+
+			stack <ll> dfs;
+			dfs.push(source);
+			nodes[source].parent = -1;
+			cost[source] = 0;
+			visited[source] = 1;
+
+			while(!dfs.empty())
 			{
-				nodes[i].index = i;
-				nodes[i].parent = -1;
-				nodes[i].edges.clear();
-			}
+				ll cur = dfs.top();
+				dfs.pop();
 
-			if(!is_tree)
-				cin>>edge_size;
-			else
-				edge_size = node_size-1;
-
-
-			for(ll i=0; i<edge_size; i++)
-			{
-				ll a, b, c=1;
-				cin>>a>>b;
-
-				if(is_cost)
-					cin>>c;
-
-				nodes[a].add_edge(b, c);
-				if(!is_directed)
-					nodes[b].add_edge(a, c);
+				for(ll i=0; i<nodes[cur].edges.size(); i++)
+				{
+					if(!visited[nodes[cur].edges[i].node] && nodes[cur].edges[i].cost>0)
+					{
+						visited[nodes[cur].edges[i].node] = 1;
+						nodes[nodes[cur].edges[i].node].parent = cur;
+						cost[nodes[cur].edges[i].node] = cost[cur] + nodes[cur].edges[i].cost;
+						dfs.push(nodes[cur].edges[i].node);
+					}
+				}
 			}
 		}
 
@@ -178,9 +185,22 @@ class Graph
 			}
 
 		}
-};
+}graph;
 
 int main()
-{
+{	
+	graph.init(5);
+	graph.add_edge(1, 2, -1);
+	graph.add_edge(1, 3, 4);
+	graph.add_edge(2, 3, 3);
+	graph.add_edge(2, 4, 2);
+	graph.add_edge(2, 5, 2);
+	graph.add_edge(4, 3, 5);
+	graph.add_edge(4, 2, 2);
+	graph.add_edge(5, 4, -3);
+
+	bellman_ford.init(1);
+	for(ll i=1; i<=graph.node_size; i++)
+		cout<<bellman_ford.get_cost(i)<<endl;
 	return 0;
 }
