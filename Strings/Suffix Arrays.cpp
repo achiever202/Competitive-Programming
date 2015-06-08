@@ -9,6 +9,12 @@
 #include <stdio.h>
 #include <vector>
 #include <math.h>
+/* 
+ * Author: Adarsh Pugalia
+ * Algorithm: Suffix array construction in O(nlog2(n)).
+ *			  LCP in O(log(n))
+ */
+
 #include <set>
 #include <queue>
 #include <algorithm>
@@ -44,6 +50,7 @@
  
 using namespace std;
 
+/* This is the comparator function for sorting suffixes. */
 bool comp(pair<ll, pair<ll, ll> > i, pair<ll, pair<ll, ll> > j)
 {
 	if(i.s.f==j.s.f)
@@ -55,11 +62,22 @@ bool comp(pair<ll, pair<ll, ll> > i, pair<ll, pair<ll, ll> > j)
 class SuffixArrays
 {
 	public:
+		/*
+		 * word stores the word for suffix array construction.
+		 * step keeps count of the number of sorting steps needed.
+		 * suf_ar[i][j] stores the sorted index of suffix at index j in step i.
+		 */ 
 		string word;
 		ll step, cnt;
 		ll suf_ar[max_log][max_size];
 		pair<ll, pair<ll, ll> > sorted_sufs[max_size];
 
+		/*
+		 * This function does the suffix array construction.
+		 * @param string: word for construction
+		 * @return void.
+		 * O(nlog2(n))
+		 */
 		void init(string w)
 		{
 			word = w;
@@ -87,6 +105,8 @@ class SuffixArrays
 			}
 		}
 
+
+		/* This function prints the sorted suffixes. */
 		void print_suffixes()
 		{
 			for(ll i=0; i<word.length(); i++)
@@ -97,6 +117,7 @@ class SuffixArrays
 			}
 		}
 
+		/* This function returns the longest common prefix for suffixes at index x and y. */
 		ll lcp(ll x, ll y)
 		{
 			if(x==y)
@@ -114,7 +135,7 @@ class SuffixArrays
 
 int main()
 {
-	suffix_array.init("banana");
+	suffix_array.init("alabalaalabala");
 	suffix_array.print_suffixes();
 	return 0;
 }
