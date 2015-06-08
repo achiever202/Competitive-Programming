@@ -9,12 +9,6 @@
 #include <stdio.h>
 #include <vector>
 #include <math.h>
-/* 
- * Author: Adarsh Pugalia
- * Algorithm: Suffix array construction in O(nlog2(n)).
- *			  LCP in O(log(n))
- */
-
 #include <set>
 #include <queue>
 #include <algorithm>
