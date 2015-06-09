@@ -93,7 +93,8 @@ class KMP
 						j = failure_function[j-1];
 					else
 						i++;
-				}			}
+				}			
+			}
 
 			return ret;
 		}
@@ -108,6 +109,6 @@ class KMP
 
 int main()
 {
-	
+		
 	return 0;
 }
