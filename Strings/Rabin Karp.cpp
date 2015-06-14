@@ -71,14 +71,60 @@ ll mod_divison(ll dividend, ll divisor, ll mod)
 class RabinKarp
 {
 	public:
+		/*
+		 * Use these primes in case primes not given, prime1 = 9999991, prime2 = 1000000007 
+		 */
 		ll prime1, prime2;
 		ll alphabet_size;
+		pll pre[max_size], suf[max_size], mul[max_size];
 
 		void init(ll i, ll j, ll k)
 		{
 			prime1 = i;
 			prime2 = j;
 			alphabet_size = k;
+		}
+
+		void init(ll k)
+		{
+			alphabet_size = k;
+			prime1 = 9999991;
+			prime2 = 1000000007;
+		}
+
+		void generate_prefix_hash(string word)
+		{
+			pre[0] = make_pair(0, 0);
+			mul[0] = make_pair(1, 1);
+
+			for(ll i=1; i<=word.length(); i++)
+			{
+				pre[i].f = ((pre[i-1].f*alphabet_size)%prime1 + word[i-1]-'a')%prime1;
+				pre[i].s = ((pre[i-1].s*alphabet_size)%prime2 + word[i-1]-'a')%prime2;
+
+				mul[i].f = (mul[i-1].f*alphabet_size)%prime1;
+				mul[i].s = (mul[i-1].s*alphabet_size)%prime2;
+			}
+		}
+
+
+		void generate_suffix_hash(string word)
+		{
+			suf[word.length()+1] = make_pair(0, 0);
+			for(ll i=word.length(); i>0; i--)
+			{
+				suf[i].f = ((suf[i+1].f*alphabet_size)%prime1 + (word[i-1]-'a'))%prime1;
+				suf[i].s = ((suf[i+1].s*alphabet_size)%prime2 + (word[i-1]-'a'))%prime2;
+			}	
+		}
+
+
+		pll get_hash(ll i, ll j)
+		{
+			ll hash1 = ((pre[j].f - pre[i-1].f*mul[j-i+1].f)%prime1+prime1)%prime1;
+			ll hash2 = ((pre[j].s - pre[i-1].s*mul[j-i+1].s)%prime2+prime2)%prime2;
+
+			return make_pair(hash1, hash2);
 		}
 
 		vl search(string text, string pattern)
