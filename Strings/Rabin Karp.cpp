@@ -99,8 +99,8 @@ class RabinKarp
 
 			for(ll i=1; i<=word.length(); i++)
 			{
-				pre[i].f = ((pre[i-1].f*alphabet_size)%prime1 + word[i-1]-'a')%prime1;
-				pre[i].s = ((pre[i-1].s*alphabet_size)%prime2 + word[i-1]-'a')%prime2;
+				pre[i].f = ((pre[i-1].f*alphabet_size)%prime1 + word[i-1])%prime1;
+				pre[i].s = ((pre[i-1].s*alphabet_size)%prime2 + word[i-1])%prime2;
 
 				mul[i].f = (mul[i-1].f*alphabet_size)%prime1;
 				mul[i].s = (mul[i-1].s*alphabet_size)%prime2;
@@ -113,8 +113,8 @@ class RabinKarp
 			suf[word.length()+1] = make_pair(0, 0);
 			for(ll i=word.length(); i>0; i--)
 			{
-				suf[i].f = ((suf[i+1].f*alphabet_size)%prime1 + (word[i-1]-'a'))%prime1;
-				suf[i].s = ((suf[i+1].s*alphabet_size)%prime2 + (word[i-1]-'a'))%prime2;
+				suf[i].f = ((suf[i+1].f*alphabet_size)%prime1 + (word[i-1]))%prime1;
+				suf[i].s = ((suf[i+1].s*alphabet_size)%prime2 + (word[i-1]))%prime2;
 			}	
 		}
 
