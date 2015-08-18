@@ -1,0 +1,21 @@
+1. Bell Number counts the number of different ways to partition (unordered) a set that has exactly n elements, or equivalently, the number of equivalence relations on it. 
+
+2. If, instead, different orderings of the sets are considered to be different partitions, then the number of these ordered partitions is given by the ordered Bell numbers.
+
+3. The Bell numbers also count the rhyme schemes of an n-line poem or stanza. A rhyme scheme describes which lines rhyme with each other, and so may be interpreted as a partition of the set of lines into rhyming subsets.
+
+4. The Bell numbers come up in a card shuffling problem mentioned in the addendum to Gardner (1978). If a deck of n cards is shuffled by repeatedly removing the top card and reinserting it anywhere in the deck (including its original position at the top of the deck), with exactly n repetitions of this operation, then there are nn different shuffles that can be performed. Of these, the number that return the deck to its original sorted order is exactly Bn. Thus, the probability that the deck is in its original order after shuffling it in this way is Bn/nn, which is significantly larger than the 1/n! probability that would describe a uniformly random permutation of the deck.
+
+5. void compute_bell(ll n){
+	bell[0][0] = 1;
+	for(ll i=1; i<=n; i++){
+		bell[i][0] = bell[i-1][i-1];
+		rep(j=1; j<=i; j++){
+			bell[i][j] = bell[i][j-1]+bell[i-1][j-1];
+		}
+	}
+}
+
+6. B(n+1) = summation(0-n){nCk*B(k)}
+
+7. If p is prime, B(n+p) = B(n)+B(n+1) (mod p)
