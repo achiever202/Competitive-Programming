@@ -1,9 +1,9 @@
 /*
- * Author: 		Adarsh Pugalia
+ * Author: 	Adarsh Pugalia
  *
  * Algorithm: 	Z Algorithm: For a given string s, it calculates the longest
- *				subbstring starting from each index, such that the substring
- *				is a prefix of the string.
+ *			subbstring starting from each index, such that the substring
+ *			is a prefix of the string.
  *
  * Complexity:	O(n)
  */
