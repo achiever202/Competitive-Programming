@@ -163,21 +163,21 @@ void generate_power(ll n, ll p)
  
  
 /* This function calculates primes upto the given max_sieve_size. */
-ll sieve[max_sieve_size];
-vector <ll> primes;
+int sieve[max_sieve_size];
+vector <int> primes;
 void calc_sieve()
 {
-	for(ll i=0; i<max_sieve_size; i++)
+	for(int i=0; i<max_sieve_size; i++)
 		sieve[i] = 0;
  
 	sieve[0] = sieve[1] = -1;
  
-	for(ll i=2; i<max_sieve_size; i++)
+	for(int i=2; i<max_sieve_size; i++)
 	{
 		if(sieve[i]==0)
 		{
 			primes.pb(i);
-			for(ll j=i; j<max_sieve_size; j=j+i)
+			for(int j=i; j<max_sieve_size; j=j+i)
 			{
 				sieve[j]++;
 			}
