@@ -54,6 +54,8 @@
  
 using namespace std;
 
+int num[max_size];
+
 class Node {
 	public:
 		int index;
@@ -104,17 +106,43 @@ class Tree {
 		}
 
 
-		void dfs(int node, int parent) {
+		ll dfs(int node, int parent, int cur, int d) {
 			nodes[node].parent = parent;
+
+			ll ret = 1;
 
 			rep(i,0,sz(nodes[node].edges)) {
 				if(nodes[node].edges[i].f!=parent) {
-
+					if(num[nodes[node].edges[i].f>=cur && num[nodes[node].edges[i].f]]<=cur+d) {
+						ret = (ret*(dfs(nodes[node].edges[i].f, node, cur, d)));
+					}
 				}
 			}
+
+			return ret;
 		}
 }tree;
 
 int main() {
+	int d, n;
+	sd(d)l sd(n);
+
+	ll ans = 0;
+	tree.init(n);
+
+	rep(i,1,n)
+		sd(num[i]);
+
+	rep(i,1,n-1){
+		int a, b;
+		sd(a); sd(b);
+		tree.add_edge(a, b);
+	}
+
+	rep(i,1,n){
+		ans = (ans + tree.dfs(i, -1))%MOD;
+	}
+
+	pl(ans); pe;
 	return 0;
 }
