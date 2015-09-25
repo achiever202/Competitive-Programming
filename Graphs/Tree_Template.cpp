@@ -41,7 +41,7 @@
 #define pob pop_back
 #define mp make_pair
  
-#define max_size 100005
+#define max_size 200005
 #define max_capacity INT_MAX
 #define max_string_size 1000
 #define max_node_size 340
@@ -49,12 +49,10 @@
 #define max_log 17
 #define max_sieve_size 1005
 
-#define INF 1000000000
+#define INF 100000000000L
 #define MOD 1000000007
  
 using namespace std;
-
-int num[max_size];
 
 class Node {
 	public:
@@ -63,10 +61,12 @@ class Node {
 		vector<pair<int, ll> >edges;
 };
 
+int ans = 0;
+
 class Tree {
 	public:
 		Node nodes[max_size];
-		int node_size;
+		int node_size, visited[max_size];
 
 		void init(int sz) {
 			node_size = sz;
@@ -88,6 +88,26 @@ class Tree {
 			add_edge(i,j,1);
 		}
 
+
+		/*
+		 * This function removes the edge between nodes i and j.
+
+		 * NOTE: The removal changes the vector states, so do not remove
+		 * the edge while iterating over the vector.
+		 */
+		void remove_edge(int a, int b) {
+			ll cost;
+			rep(i,0,sz(nodes[a].edges)) {
+				if(nodes[a].edges[i].f==b) {
+					cost = nodes[a].edges[i].s;
+					break;
+				}
+			}
+
+			nodes[a].edges.erase(remove(nodes[a].edges.begin(), nodes[a].edges.end(), mp(b,cost)), nodes[a].edges.end());
+			nodes[b].edges.erase(remove(nodes[b].edges.begin(), nodes[b].edges.end(), mp(a,cost)), nodes[b].edges.end());
+		}
+
 		pair<int, int> get_diameter(int node, int parent) {
 			nodes[node].parent = parent;
 
@@ -106,43 +126,29 @@ class Tree {
 		}
 
 
-		ll dfs(int node, int parent, int cur, int d) {
+		void dfs(int node, int parent) {
 			nodes[node].parent = parent;
-
-			ll ret = 1;
 
 			rep(i,0,sz(nodes[node].edges)) {
 				if(nodes[node].edges[i].f!=parent) {
-					if(num[nodes[node].edges[i].f>=cur && num[nodes[node].edges[i].f]]<=cur+d) {
-						ret = (ret*(dfs(nodes[node].edges[i].f, node, cur, d)));
-					}
+					dfs(nodes[node].edges[i].f, node);
 				}
 			}
-
-			return ret;
 		}
 }tree;
 
 int main() {
-	int d, n;
-	sd(d)l sd(n);
+	int n;
+	sd(n);
 
-	ll ans = 0;
 	tree.init(n);
 
-	rep(i,1,n)
-		sd(num[i]);
-
-	rep(i,1,n-1){
+	rep(i,1,n-1) {
 		int a, b;
 		sd(a); sd(b);
+
 		tree.add_edge(a, b);
 	}
-
-	rep(i,1,n){
-		ans = (ans + tree.dfs(i, -1))%MOD;
-	}
-
-	pl(ans); pe;
+	
 	return 0;
 }
