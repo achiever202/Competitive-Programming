@@ -9,30 +9,62 @@
  * The function longest_increasing_subsequence computes the longest increasing subsequence of the given array.
  * vector lis stores the longest increasing subsequence obtained in reverse order.
  */
-
 #include <iostream>
 #include <stdio.h>
 #include <vector>
 #include <math.h>
 #include <set>
-
+#include <queue>
+#include <algorithm>
+#include <stack>
+#include <cmath>
+#include <cassert>
+#include <map>
+#include <limits>
+#include <cassert>
+ 
 #define ll long long int
 #define vi vector <int>
-#define vl vector <ll>
-#define vpii vector <pair<int, int> >
-#define vpll vector <pair<ll, ll> >
-
+#define vl vector <ll> 
+#define pii pair<int, int>
+#define pll pair<ll, ll>
+#define vpii vector <pii >
+#define vpll vector <pll >
+ 
+ 
 #define f first
 #define s second
-
+ 
 #define sd(n) scanf("%d", &n)
 #define sl(n) scanf("%lld", &n)
+#define slf(n) scanf("%lf", &n)
+
+#define pd(n) printf("%d", n);
+#define pl(n) printf("%lld", n);
+#define ps printf(" ")
+#define pe printf("\n")
+
+#define rep(i,j,k) for(int i=j; i<=k; i++)
+#define repd(i,j,k) for(int i=j; i>=k; i--)
+
+#define sz(n) (int)n.size()-1
+#define all(n) n.begin(), n.end()
 
 #define pb push_back
 #define pob pop_back
+#define mp make_pair
+ 
+#define max_size 2000005
+#define max_capacity INT_MAX
+#define max_string_size 1000
+#define max_node_size 340
+#define max_power 26
+#define max_log 17
+#define max_sieve_size 1005
 
-#define max_size 100005
-
+#define INF 1000000000
+#define MOD 1000000007
+ 
 using namespace std;
 
 class LongestIncreasingSubsequence
@@ -40,25 +72,25 @@ class LongestIncreasingSubsequence
 	public:
 		/* The input array. */
 		ll ar[max_size];
-		ll n;
+		int n;
 		/* 
 		 * lis_length[i] stores the index of the element with the smalles value for a subsequence of length i.
 		 * predecessor[i] stores the predecessor of the element at index i in the lis ending at i.
 		 * lis stores the longest increasing subsequence in reverse order.
 		 */
-		vl lis_length;
-		ll predecessor[max_size];
+		vi lis_length;
+		int predecessor[max_size];
 		vl lis;
 
 		void init()
 		{
 			cin>>n;
-			for(ll i=0; i<n; i++)
-				cin>>ar[i];
+			rep(i,0,n-1)
+				sl(ar[i]);
 		}
 
 		/* This function finds the largest index such that ar[lis_length[index]]<ar[cur]. */
-		ll find_index(ll cur, ll start, ll end)
+		int find_index(int cur, int start, int end)
 		{
 			if(end-start<=1)
 			{
@@ -71,7 +103,7 @@ class LongestIncreasingSubsequence
 				return -1;
 			}
 
-			ll mid = (start+end)/2;
+			int mid = (start+end)/2;
 
 			if(ar[lis_length[mid+1]]<ar[cur])
 				return find_index(cur, mid+1, end);
@@ -85,14 +117,14 @@ class LongestIncreasingSubsequence
 		 * @param n: the size of array.
 		 * @return: the value of longest increasing subsequence.
 		 */
-		ll  get_lis()
+		int  get_lis()
 		{
 			lis_length.push_back(0);
 			predecessor[0] = -1;
 
-			for(ll i=1; i<n; i++)
+			rep(i,1,n-1)
 			{
-				ll index = find_index(i, 0, lis_length.size()-1);
+				int index = find_index(i, 0, lis_length.size()-1);
 
 				if(index==-1)
 				{
@@ -111,7 +143,7 @@ class LongestIncreasingSubsequence
 				}
 			}
 
-			ll cur = lis_length[lis_length.size()-1];
+			int cur = lis_length[lis_length.size()-1];
 			while(cur!=-1)
 			{
 				lis.push_back(ar[cur]);
