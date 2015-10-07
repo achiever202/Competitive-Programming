@@ -1,3 +1,8 @@
+/*
+ * Author: Adarsh Pugalia
+ * Algorithm: Implementation of BIT.
+ */
+
 #include <iostream>
 #include <stdio.h>
 #include <vector>
@@ -36,13 +41,14 @@
 #define rep(i,j,k) for(int i=j; i<=k; i++)
 #define repd(i,j,k) for(int i=j; i>=k; i--)
 
-#define sz(n) (int)n.size()-1 
+#define sz(n) (int)n.size()-1
 #define all(n) n.begin(), n.end()
+
 #define pb push_back
 #define pob pop_back
 #define mp make_pair
  
-#define max_size 100005
+#define max_size 500005
 #define max_capacity INT_MAX
 #define max_string_size 1000
 #define max_node_size 340
@@ -50,55 +56,44 @@
 #define max_log 17
 #define max_sieve_size 1005
 
-#define INF 100000000000L
+#define INF 1000000000
 #define MOD 1000000007
  
 using namespace std;
+ 
+using namespace std;
 
-class CoordinateCompression {
+class BIT {
 	public:
-		static const int EXACT_VALUE=0, LESS_THAN_EQUAL=1, GREATER_THAN_EQUAL=2;
-		vector <ll> v;
-		map<ll, int> mapping;
+		int n;
+		ll tree[max_size];
 
-		void init(vector<ll> original) {
-			v.clear();
-			mapping.clear();
-
-			set<ll> s;
-			rep(i,0,sz(original))
-				s.insert(original[i]);
-
-			v.assign(all(s));
-
-			rep(i,0,sz(v)) {
-				mapping.insert(mp(v[i], i));
-			}
+		void init(int num)
+		{
+			n = num;
+			rep(i,0,n)
+				tree[i] = 0;
 		}
 
-		int get_index(ll value) {
-			map<ll, int>::iterator it = mapping.find(value);
-			if(it==mapping.end())
-				return -1;
-
-			return it->s;
-		}
-
-		int get_index_smaller(int start, int end, ll value) {
-			if(end-start<=1) {
-				if(v[end]<value)
-					return end;
-
-				if(v[start]<value)
-					return start;
-
-				return -1;
+		ll get_cumulative_frequency(ll index)
+		{
+			ll ret = 0;
+			while(index>0)
+			{
+				ret += tree[index];
+				index -= (index & (-index));
 			}
 
-			int mid = (start+end)/2;
-			if(v[mid+1]<value)
-				return get_index_smaller(mid+1, end, value);
-
-			return get_index_smaller(start, mid, value);
+			return ret;
 		}
-}cc;
+
+
+		void update_frequency(int index, ll value)
+		{
+			while(index<=n)
+			{
+				tree[index] += value;
+				index += (index &(-index));
+			}
+		}
+}bit;
