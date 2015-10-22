@@ -93,15 +93,6 @@ class Tree {
 		void add_edge(int i, int j) {
 			add_edge(i,j,1);
 		}
-
-		void dfs(int node, int parent) {
-			nodes[node].parent = parent;
-
-			rep(i,0,sz(nodes[node].edges)) {
-				if(nodes[node].edges[i].f!=parent) {
-				}
-			}
-		}
 }tree;
 
 class LCA {
@@ -169,8 +160,13 @@ class LCA {
 
 
 		int get_ancestor_at_level(int a, int lvl) {
-			
-		}
+            repd(i,max_log-1, 0) {
+                if(level[a]-power2[i]>=lvl)
+                    a = level_parent[i][a];
+            }
+
+            return a;
+        }
 
 }lca;
 
