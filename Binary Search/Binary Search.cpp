@@ -1,9 +1,8 @@
-/*
- * Author: Adarsh Pugalia
- * Algorithm: Kth laregst number in a multiplication grid.
- * Complexity: O(nlog(nm))
- * Problem: http://codeforces.com/contest/448/problem/D
- */
+/*****************************************************************************************/
+/*                                                                                       */
+/*                      Adarsh Pugalia                                                   */
+/*                                                                                       */
+/*****************************************************************************************/
 #include <iostream>
 #include <stdio.h>
 #include <vector>
@@ -108,6 +107,28 @@ class BinarySearch {
                 return b_search_left(start, mid, value);
 
             return b_search_left(mid+1, end, value);
+        }
+
+
+        ll b_search_right(ll start, ll end, ll value) {
+            if(end<start)
+                return -1;
+
+            if(end-start<=1) {
+                if(check(end, value))
+                    return end;
+
+                if(check(start, value))
+                    return start;
+
+                return -1;
+            }
+
+            ll mid = (start+end)/2;
+            if(check(mid+1, value))
+                return b_search_right(mid+1, end, value);
+
+            return b_search_right(start, mid, value);
         }
 }b_search;
 
